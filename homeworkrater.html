@@ -1,0 +1,43 @@
+<template name="home">
+
+    <head>
+        <title>formtest</title>
+    </head>
+
+    <h1>Welcome to Homework Rater!</h1>
+    {{> hello}}
+    {{> homeworkRating}}
+
+</template>
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="homeworkRating">
+{{#if currentUser}}
+
+    {{> quickForm collection="Homework" id="insertBookForm" type="insert" omitFields="fName,lName,userId,userName" }}
+
+{{/if}}
+</template>
+
+
+<template name="about">
+    This is the about page
+</template>
+
+
+<template name="results">
+    This is the results page
+    {{#each Homework}}
+        {{Name}}  {{page}} <br>
+    {{/each}}
+    {{user}}
+
+</template>
+
+<template name="signup">
+    Hello
+    {{> atForm}}
+</template>
