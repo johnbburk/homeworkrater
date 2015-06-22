@@ -10,6 +10,7 @@
 
 </template>
 <template name="hello">
+
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
 </template>
@@ -17,21 +18,37 @@
 <template name="homeworkRating">
 {{#if currentUser}}
 
-    {{> quickForm collection="Homework" id="insertBookForm" type="insert" omitFields="fName,lName,userId,userName" }}
+<h2>Hello</h2>
+    {{#autoForm id="HWform" type="insert" collection="Homework"}}
+
+        {{ > afQuickField name="page"}}
+
+        {{ > afQuickField name="problems" }}
+
+        <button type="submit" class="btn btn-primary">Insert</button>
+
+    {{/autoForm}}
+
 
 {{/if}}
 </template>
 
 
 <template name="about">
-    This is the about page
+  <h2> This is the about page</h2>
+
 </template>
 
 
 <template name="results">
-    This is the results page
+    <h2>This is the results page</h2>
+
+    <br>
     {{#each Homework}}
-        {{Name}}  {{page}} <br>
+        {{fName}}   {{lName}}   {{formatDate dateCreated}}  {{page}} {{Problems}}
+
+
+        <br>
     {{/each}}
     {{user}}
 

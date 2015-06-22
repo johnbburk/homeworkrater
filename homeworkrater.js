@@ -17,7 +17,10 @@ Homework.attachSchema(new SimpleSchema({
         type: String,
         autoValue:function(){return Meteor.users.findOne({_id: this.userId}).profile.lName},
     },
-
+    dateCreated:{
+        type: Date,
+        autoValue:function(){return new Date()},
+    },
 
     page: {
         type: Number,
@@ -25,42 +28,121 @@ Homework.attachSchema(new SimpleSchema({
         max: 200
     },
 
-    problem1: {
-        type: Boolean,
+    problems:{
+        type: Object,
     },
-    problem2: {
-        type: Boolean,
+    'problems.one':{
+    type: Boolean,
+        label: "Problem 1"
+
     },
-    problem3: {
+    'problems.two':{
         type: Boolean,
+        label: "Problem 2"
+
     },
-    problem4: {
+    'problems.three':{
         type: Boolean,
+        label: "Problem 3"
+
     },
-    problem5: {
+    'problems.four':{
         type: Boolean,
+        label: "Problem 4"
     },
-    problem6: {
+    'problems.five':{
         type: Boolean,
+        label: "Problem 5"
     },
-    problem7: {
+    'problems.six':{
         type: Boolean,
+        label: "Problem 6"
     },
-    problems8: {
+    'problems.seven':{
         type: Boolean,
+        label: "Problem 7"
     },
-    problems9: {
+    'problems.eight':{
         type: Boolean,
+        label: "Problem 8"
     },
-    problems10: {
+    'problems.nine':{
         type: Boolean,
+        label: "Problem 9"
     },
-    problems11: {
+    'problems.ten':{
         type: Boolean,
+        label: "Problem 10"
     },
-    problems12: {
+    'problems.eleven':{
         type: Boolean,
+        label: "Problem 11"
     },
+    'problems.twelve':{
+        type: Boolean,
+        label: "Problem 12"
+    },
+
+
+
+
+/*
+
+'problems': {
+    type: Boolean,
+    autoform: {
+        afFieldInput: {
+            options: function () { return {
+                one: 'sizzle',
+                two: 'two',
+                three: 'three',
+                four: 'four',
+                five: 'five',
+                six: 'six',
+            } }
+        }
+    }
+}
+
+
+
+problem1: {
+    type: Boolean,
+},
+problem2: {
+    type: Boolean,
+},
+problem3: {
+    type: Boolean,
+},
+problem4: {
+    type: Boolean,
+},
+problem5: {
+    type: Boolean,
+},
+problem6: {
+    type: Boolean,
+},
+problem7: {
+    type: Boolean,
+},
+problems8: {
+    type: Boolean,
+},
+problems9: {
+    type: Boolean,
+},
+problems10: {
+    type: Boolean,
+},
+problems11: {
+    type: Boolean,
+},
+problems12: {
+    type: Boolean,
+},
+*/
 
 }));
 
@@ -69,26 +151,37 @@ if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
 
+
+    Template.registerHelper('formatDate', function(date) {
+        return moment(date).format('MM-DD-YYYY');
+    });
+
     Template.results.helpers({
 
         Homework: function() {
             return Homework.find();
-        }
-    });
-
-    Template.results.helpers({
+        },
 
         Name: function() {
             return Meteor.user().lName();
-        }
-    });
-    Template.results.helpers({
-        Name:function(){
+        },
 
-            return Meteor.users.findOne({_id: this.userId}).username+"hello";
+        Problems: function(probelms) {
+            var text = "";
+            probelms.forEach(function (element) {
+                if(element)
+                {
+                    text+="1";
+                }
+
+            })
+
+            return text;
         }
 
+
     });
+
 
     Template.hello.helpers({
     counter: function () {
