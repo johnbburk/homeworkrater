@@ -7,3 +7,4 @@ Router.route('/',function(){
 Router.route('/about');
 Router.route('/results');
 Router.route('/signup');
+Router.route('/results2')

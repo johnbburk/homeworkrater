@@ -83,67 +83,6 @@ Homework.attachSchema(new SimpleSchema({
         label: "Problem 12"
     },
 
-
-
-
-/*
-
-'problems': {
-    type: Boolean,
-    autoform: {
-        afFieldInput: {
-            options: function () { return {
-                one: 'sizzle',
-                two: 'two',
-                three: 'three',
-                four: 'four',
-                five: 'five',
-                six: 'six',
-            } }
-        }
-    }
-}
-
-
-
-problem1: {
-    type: Boolean,
-},
-problem2: {
-    type: Boolean,
-},
-problem3: {
-    type: Boolean,
-},
-problem4: {
-    type: Boolean,
-},
-problem5: {
-    type: Boolean,
-},
-problem6: {
-    type: Boolean,
-},
-problem7: {
-    type: Boolean,
-},
-problems8: {
-    type: Boolean,
-},
-problems9: {
-    type: Boolean,
-},
-problems10: {
-    type: Boolean,
-},
-problems11: {
-    type: Boolean,
-},
-problems12: {
-    type: Boolean,
-},
-*/
-
 }));
 
 
@@ -159,7 +98,16 @@ if (Meteor.isClient) {
     Template.results.helpers({
 
         Homework: function() {
-            return Homework.find();
+           var hw= Homework.find({},{sort:{page:-1}});
+           hw.forEach(function(pg){
+               console.log(pg.page);
+               var i = 1;
+               _.each(pg.problems,function(problem){
+                    console.log(i+" "+problem);
+                    i++;
+               });
+           }) ;
+
         },
 
         Name: function() {
@@ -167,20 +115,45 @@ if (Meteor.isClient) {
         },
 
         Problems: function(probelms) {
-            var text = "";
-            probelms.forEach(function (element) {
-                if(element)
-                {
-                    text+="1";
+            _.each(problems,function(problem){
+                console.log(i+" "+problem);
+                i++;
+            });
+
+        }
+
+
+    });
+
+
+    Template.results2.helpers({
+
+        Homework: function() {
+            return Homework.find({},{sort:{page:-1}});
+
+        },
+
+        Name: function() {
+            return Meteor.user().lName();
+        },
+
+        Problems: function(probelms) {
+            text = ""
+            var i =1;
+            _.each(this.problems,function(problem){
+
+                if(problem){
+                    text+=i+", ";
                 }
-
-            })
-
+                console.log(i+" "+problem);
+                i++;
+            });
             return text;
         }
 
 
     });
+
 
 
     Template.hello.helpers({

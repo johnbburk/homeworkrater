@@ -1,1 +1,4 @@
 /* CSS declarations go here */
+th,td{
+    padding:15px;
+}

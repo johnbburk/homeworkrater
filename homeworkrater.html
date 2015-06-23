@@ -44,13 +44,38 @@
     <h2>This is the results page</h2>
 
     <br>
-    {{#each Homework}}
-        {{fName}}   {{lName}}   {{formatDate dateCreated}}  {{page}} {{Problems}}
+    {{Homework}}
 
 
-        <br>
-    {{/each}}
     {{user}}
+
+</template>
+
+<template name="results2">
+    <h2>This is the results page</h2>
+
+    <table>
+        <tr>
+        <th>First Name</th>
+            <th>Last Name</th>
+            <th>date</th>
+            <th>Page</th>
+            <th>Problems</th>
+        </tr>
+
+    <br>
+    {{#each Homework}}
+      <tr>
+       <td>{{fName}}  </td>
+          <td>{{lName}} </td>
+          <td>{{formatDate dateCreated}} </td>
+          <td> {{page}}</td>
+          <td>{{Problems}}</td>
+
+      </tr>
+
+    {{/each}}
+    </table>
 
 </template>
 
