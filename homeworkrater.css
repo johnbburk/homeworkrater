@@ -1,4 +1,15 @@
 /* CSS declarations go here */
-th,td{
-    padding:15px;
+
+th{
+    padding-left:15px;
+    padding-right:15px;
+    padding-top: 40px;
+}
+td{
+    padding-left:15px;
+    padding-right:15px;
+}
+
+table{
+    padding-bottom: 300px;
 }

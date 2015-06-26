@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="homeworkrater.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="homeworkrater.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homeworkrater.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.916666">
-              <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.84375">
+              <caret line="108" column="8" selection-start-line="108" selection-start-column="8" selection-end-line="108" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -35,17 +35,17 @@
         <entry file="file://$PROJECT_DIR$/homeworkrater.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="homeworkrater.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="homeworkrater.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homeworkrater.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2777778">
-              <caret line="114" column="10" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+            <state vertical-scroll-proportion="-13.333333">
+              <caret line="256" column="27" selection-start-line="256" selection-start-column="27" selection-end-line="256" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -55,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -67,9 +67,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/routes.js" />
+        <option value="$PROJECT_DIR$/homeworkrater.css" />
         <option value="$PROJECT_DIR$/homeworkrater.js" />
         <option value="$PROJECT_DIR$/homeworkrater.html" />
-        <option value="$PROJECT_DIR$/homeworkrater.css" />
       </list>
     </option>
   </component>
@@ -81,8 +81,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1131" />
-    <option name="y" value="27" />
+    <option name="x" value="1033" />
+    <option name="y" value="23" />
     <option name="width" value="958" />
     <option name="height" value="1177" />
   </component>
@@ -155,7 +155,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1131" y="27" width="958" height="1177" extended-state="0" />
+    <frame x="1033" y="23" width="958" height="1177" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -190,7 +190,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -222,7 +222,15 @@
     <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/homeworkrater.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.333333">
+          <caret line="256" column="27" selection-start-line="256" selection-start-column="27" selection-end-line="256" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -230,23 +238,15 @@
     <entry file="file://$PROJECT_DIR$/homeworkrater.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/homeworkrater.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.916666">
-          <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/homeworkrater.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2777778">
-          <caret line="114" column="10" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.84375">
+          <caret line="108" column="8" selection-start-line="108" selection-start-column="8" selection-end-line="108" selection-end-column="8" />
           <folding />
         </state>
       </provider>

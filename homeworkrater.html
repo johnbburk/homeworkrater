@@ -64,7 +64,7 @@
         </tr>
 
     <br>
-    {{#each Homework}}
+    {{#each rows}}
       <tr>
        <td>{{fName}}  </td>
           <td>{{lName}} </td>
@@ -78,6 +78,42 @@
     </table>
 
 </template>
+
+<template name="results3">
+    <h2>This is the results page</h2>`
+
+    {{#each Pages}}
+
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>date</th>
+            <th>Page</th>
+            <th>Problems</th>
+        </tr>
+
+        <br>
+        {{#each rows}}
+            <tr>
+                <td>{{fName}}  </td>
+                <td>{{lName}} </td>
+                <td>{{formatDate dateCreated}} </td>
+                <td> {{page}}</td>
+                <td>{{Problems}}</td>
+
+            </tr>
+
+
+        {{/each}}
+        {{> Summary}}
+    </table>
+    {{/each}}
+
+
+</template>
+
+
 
 <template name="signup">
     Hello
