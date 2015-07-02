@@ -38,7 +38,11 @@ Homework.attachSchema(new SimpleSchema({
 
 
 if (Meteor.isClient) {
-  Session.setDefault('currentPage', 5);
+  latestPage = function(){
+    return Homework.findOne({},{sort: {page: -1}}).page;
+  };
+
+  Session.setDefault('currentPage', latestPage());
 
 
     Template.registerHelper('formatDate', function(date) {
@@ -46,6 +50,10 @@ if (Meteor.isClient) {
     });
 
     Template.results.helpers({
+
+        displayPage: function(){
+          return Session.get('currentPage');
+        },
 
         Homework: function() {
             return Homework.find();
@@ -210,11 +218,11 @@ problemsStringToArray = function(string){
     if(typeof(string)=="string"){
 	problemString = string.split(",");
 
-	problemString.forEach(function(e){blankArray.push(parseInt(e))});
+	problemString.forEach(function(e){blankArray.push(parseInt(e))});  //this adds the problems in the string array as ints
 
-            return _.sortBy(blankArray,function(e){return e});
+            return _.sortBy(blankArray,function(e){return e}); //return the sorted array
     }
     else{
      return null;
     }
-}
+};
