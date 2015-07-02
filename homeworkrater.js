@@ -1,73 +1,3 @@
-
-var partitionTables2 = function(documents){
-    var tables = [];
-    var currentPage = 0;
-    var tableNumber = 0;
-    documents.forEach(function(entry){
-        if(currentPage == 0 || entry.page!=currentPage)
-        {
-            tables[tableNumber]={rows:[]};
-            currentPage = entry.page;
-            tableNumber++;
-        };
-        tables[tableNumber-1].rows.push(entry);
-    });
-    return tables;
-};
-
-var listElements = function(documents){
-    console.log("listing");
-    console.log("counting size of document"+_.size(documents));
-    _.each(documents,function(doc){
-        console.log(doc);
-    });
-};
-
-
-var pageTotals=function(documents){
-  var probTable=[];
-
-    documents.forEach(function(entry){
-
-        var i=1;
-        console.log("i is "+i);
-        console.log("entry.page is "+entry.page);
-        console.log("probTable[entry.page] is "+probTable[entry.page]);
-        if (typeof probTable[entry.page]==='undefined')
-        {
-
-            //create new array if it doesn't exist
-            probTable[entry.page] = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-        }
-        _.each(entry.problems, function(prob){
-
-            if (typeof probTable[entry.page][i]==='undefined')
-            {
-                probTable[entry.page] = 0;
-            }
-
-
-           if(prob)
-           {
-               probTable[entry.page][i]++
-               console.log("incrementing page "+entry.page+" problem "+i+"to "+probTable[entry.page][i])
-           }
-            i++;
-
-       });
-
-
-    });
-    console.log(probTable);
-    return probTable;
-};
-
-var printPageTotals=function(document)
-{
-
-};
-
-
 Homework = new Mongo.Collection("homework");
 Homework.attachSchema(new SimpleSchema({
     userId:{
@@ -99,66 +29,16 @@ Homework.attachSchema(new SimpleSchema({
     },
 
     problems:{
-        type: Object,
-    },
-    'problems.one':{
-    type: Boolean,
-        label: "Problem 1"
+        type: String,
+        label:"Problems"}
 
-    },
-    'problems.two':{
-        type: Boolean,
-        label: "Problem 2"
 
-    },
-    'problems.three':{
-        type: Boolean,
-        label: "Problem 3"
-
-    },
-    'problems.four':{
-        type: Boolean,
-        label: "Problem 4"
-    },
-    'problems.five':{
-        type: Boolean,
-        label: "Problem 5"
-    },
-    'problems.six':{
-        type: Boolean,
-        label: "Problem 6"
-    },
-    'problems.seven':{
-        type: Boolean,
-        label: "Problem 7"
-    },
-    'problems.eight':{
-        type: Boolean,
-        label: "Problem 8"
-    },
-    'problems.nine':{
-        type: Boolean,
-        label: "Problem 9"
-    },
-    'problems.ten':{
-        type: Boolean,
-        label: "Problem 10"
-    },
-    'problems.eleven':{
-        type: Boolean,
-        label: "Problem 11"
-    },
-    'problems.twelve':{
-        type: Boolean,
-        label: "Problem 12"
-    },
 
 }));
 
 
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+  Session.setDefault('currentPage', 5);
 
 
     Template.registerHelper('formatDate', function(date) {
@@ -168,115 +48,101 @@ if (Meteor.isClient) {
     Template.results.helpers({
 
         Homework: function() {
-           var hw= Homework.find({},{sort:{page:-1}});
-           hw.forEach(function(pg){
-               var i = 1;
-               _.each(pg.problems,function(problem){
-                    i++;
-               });
-           }) ;
-
+            return Homework.find();
         },
 
         Name: function() {
             return Meteor.user().lName();
         },
 
-        Problems: function(probelms) {
-            _.each(problems,function(problem){
-                i++;
+        problemString: function() {
+
+            return problemsStringToArray(this.problems);
+
+        },
+        selectedPageHomeworkAll:function(){
+          return Homework.find({page:Session.get('currentPage')});
+
+        },
+        flaggedProblemsText:function(){
+
+        var currentPageHomework = Homework.find({page:Session.get('currentPage')}); //get HW from database with current page
+        var selectedProblems = [];
+        if(currentPageHomework){
+        currentPageHomework.forEach(function(hw){
+
+        selectedProblems = _.union(selectedProblems,problemsStringToArray(hw.problems)); //find all problems that students submitted and combine them into a single array
+        selectedProblems = _.sortBy(selectedProblems,function(e){return e}); //sort problems in ascending order
+        })
+
+        var arrayString = "";
+
+        selectedProblems.forEach(function(problem){
+
+        arrayString += problem+",";
+
+        })
+
+        return arrayString;
+        }
+        },
+        flaggedProblems:function(){
+        //As described above, create an array that contains all flagged problems submitted
+
+        var currentPageHomework = Homework.find({page:Session.get('currentPage')}).fetch(); //get HW from database with current page
+        var selectedProblems = [];
+
+        currentPageHomework.forEach(function(hw){
+
+        selectedProblems = _.union(selectedProblems,problemsStringToArray(hw.problems)); //find the union of all problems that students have submitted so far, and the current hw document from the database
+
+
+        })
+        selectedProblems = _.sortBy(selectedProblems,function(e){return e}); //Sort in ascending order
+        //Now we will create an array of objects containing these flagged problems and the number of times they are flagged by different students.
+        var flaggedProblems = [];
+        var currentProblems;
+        var currentCount;
+
+        selectedProblems.forEach(function(problemNum){ //for each problem number in this array...
+            currentCount = 0;
+
+
+
+            currentPageHomework.forEach(function(document){ //check each document in the DB on the current page to see if that problem is in the array
+
+            currentProblems = problemsStringToArray(document.problems);
+            if(_.contains(currentProblems,problemNum)){
+
+           currentCount++;
+
+           }
             });
+
+        flaggedProblems.push({
+        problemNum: problemNum,
+        count: currentCount
+
+        })    //You could potentially store other information about each problem as well, but I'm keeping it simple.
+
+        })
+        return flaggedProblems;
+
 
         }
 
 
     });
+    Template.results.events({
+    'change #selectPageNumber':function(e){
+     var changedValue = parseInt($('#selectPageNumber').val());
+     Session.set('currentPage',changedValue);
 
-
-    Template.results2.helpers({
-
-        Homework: function() {
-            console.log(_.size(Homework.find({},{sort:{page:-1}})));
-            return Homework.find({},{sort:{page:-1}});
-
-        },
-
-        Name: function() {
-            return Meteor.user().lName();
-        },
-
-        Problems: function(probelms) {
-            text = ""
-            var i =1;
-            _.each(this.problems,function(problem){
-
-                if(problem){
-                    text+=i+", ";
-                }
-                i++;
-            });
-            return text;
-        }
-
-
-    });
-
-    Template.results3.helpers({
-
-        Pages: function() {
-
-            var pgs=Homework.find({},{sort:{page:-1}});
-            //console.log();
-           var probTotals = pageTotals(Homework.find({},{sort:{page:-1}}));
-            return partitionTables2(pgs);
-
-        },
-
-        Name: function() {
-            return Meteor.user().lName();
-        },
-
-
-
-        Problems: function(probelms) {
-            text = ""
-            var i =1;
-            _.each(this.problems,function(problem){
-
-                if(problem){
-                    text+=i+", ";
-                }//console.log(i+" "+problem);
-                i++;
-            });
-            return text;
-        },
-
-        Summary: function(page)
-        {
-            var probTotals = pageTotals(Homework.find({},{sort:{page:-1}}));
-            var text ="test"
-            return text;
-
-        }
-
-
-    });
-
-
-
-
-    Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
     }
-  });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
+    });
+
+
 
 
     Accounts.ui.config({
@@ -287,6 +153,8 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+
+
   });
 }
 
@@ -337,5 +205,16 @@ AccountsTemplates.addField({
 });
 
 
+problemsStringToArray = function(string){
+	blankArray = [];
+    if(typeof(string)=="string"){
+	problemString = string.split(",");
 
+	problemString.forEach(function(e){blankArray.push(parseInt(e))});
 
+            return _.sortBy(blankArray,function(e){return e});
+    }
+    else{
+     return null;
+    }
+}
