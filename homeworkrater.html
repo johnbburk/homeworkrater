@@ -5,6 +5,7 @@
     </head>
 
     <h1>Welcome to Homework Rater!</h1>
+    {{> loginButtons}}
     {{> signup}}
     {{> homeworkRating}}
 
@@ -38,31 +39,36 @@
 </template>
 
 
+<template name="admin">
+  {{#if isInRole 'admin'}}
+<h2>This is the admin page</h2>
+
+  {{/if}}
+</template>
+
+
+
 <template name="results">
 
     <div class = "row">
     <div class = "col-md-6 col-md-offset-3">
     <h2>This is the results page</h2>
+    Hello {{currentUser.username}}<br>
     Selected page:
      <input type ="number" min="1" id = "selectPageNumber" class = "form-control-xs" placeholder = "Enter Page Number">
         <hr/>
-
-        </div>
-
-        </div>
-    <div class = "row">
-    <div class = "col-md-6 col-md-offset-3">
-    <h2>Output for page {{displayPage}}</h2>
     </div>
 
     </div>
     <div class = "row">
+
     <div class = "col-md-6 col-md-offset-3">
+    Flagged problems for page {{displayPage}} in class {{displayClass}}
     <table class = "table table-bordered table-striped">
     <tr><td>Name: </td><td>Date:</td><td>Problems:</td></tr>
     {{#each selectedPageHomeworkAll}}
     <tr>
-     <td>{{fName}}   {{lName}}</td>   <td>{{formatDate dateCreated}}</td>  <td>{{problemString}}</td>
+     <td>{{#if isInRole 'teacher'}}{{fName}}   {{lName}}{{/if}}</td>   <td>{{formatDate dateCreated}}</td>  <td>{{problemString}}</td>
     </tr>
     {{/each}}
 
@@ -73,8 +79,9 @@
     </div>
 
     <div class = "row">
+
     <div class = "col-md-6 col-md-offset-3">
-    The following problems were flagged by students: {{flaggedProblemsText}}
+    The following problems were flagged by students:
     <table class = "table table-bordered table-striped">
 
     <tr><td>Date: </td><td>Problem #:</td><td># of Students:</td></tr>
@@ -96,7 +103,7 @@
     <tr><td>Name: </td><td>Date:</td><td>Page:</td><td>Problems:</td></tr>
     {{#each Homework}}
     <tr>
-      <td>{{fName}}   {{lName}}</td>   <td>{{formatDate dateCreated}}</td> <td>{{page}}</td> <td>{{problemString}}</td>
+      <td>{{#if isInRole 'teacher'}}{{fName}}   {{lName}}{{/if}}</td>   <td>{{formatDate dateCreated}}</td> <td>{{page}}</td> <td>{{problemString}}</td>
     </tr>
     {{/each}}
 
@@ -108,6 +115,19 @@
 </template>
 
 <template name="signup">
-    Hello
+
     {{> atForm}}
+</template>
+
+
+<template name="students">
+
+  This is the student data page<br>
+ <select name = "studentList">
+  {{#each Students}}
+  <option value="{{fName}} {{lName}}">Test Me</option>
+  {{/each}}
+</select>
+
+
 </template>

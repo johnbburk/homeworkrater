@@ -21,6 +21,11 @@ Homework.attachSchema(new SimpleSchema({
         type: Date,
         autoValue:function(){return new Date()},
     },
+    class:{
+      type: String,
+      autoValue:function(){return Meteor.users.findOne({_id: this.userId}).profile.class},
+    },
+
 
     page: {
         type: Number,
@@ -39,10 +44,24 @@ Homework.attachSchema(new SimpleSchema({
 
 if (Meteor.isClient) {
   latestPage = function(){
-    return Homework.findOne({},{sort: {page: -1}}).page;
+    var hw = Homework.find();
+    if(hw.count()){
+    return Homework.findOne({}, {sort: {page: -1}}).page;
+    }
   };
 
-  Session.setDefault('currentPage', latestPage());
+  findClass = function(){
+    if(Meteor.user() ){
+      return Meteor.user().profile.class;
+  }
+  };
+
+  Template.results.created (function(){
+    Session.setDefault('currentPage', latestPage());
+    Session.setDefault('currentClass', findClass());
+  });
+
+
 
 
     Template.registerHelper('formatDate', function(date) {
@@ -53,6 +72,10 @@ if (Meteor.isClient) {
 
         displayPage: function(){
           return Session.get('currentPage');
+        },
+
+        displayClass: function(){
+          return Session.get('currentClass');
         },
 
         Homework: function() {
@@ -69,12 +92,13 @@ if (Meteor.isClient) {
 
         },
         selectedPageHomeworkAll:function(){
-          return Homework.find({page:Session.get('currentPage')});
+          return Homework.find({page: Session.get('currentPage'), class: Session.get('currentClass')});
 
         },
+
         flaggedProblemsText:function(){
 
-        var currentPageHomework = Homework.find({page:Session.get('currentPage')}); //get HW from database with current page
+        var currentPageHomework = Homework.find({page:Session.get('currentPage'), class: Session.get('currentClass')}); //get HW from database with current page
         var selectedProblems = [];
         if(currentPageHomework){
         currentPageHomework.forEach(function(hw){
@@ -97,7 +121,7 @@ if (Meteor.isClient) {
         flaggedProblems:function(){
         //As described above, create an array that contains all flagged problems submitted
 
-        var currentPageHomework = Homework.find({page:Session.get('currentPage')}).fetch(); //get HW from database with current page
+        var currentPageHomework = Homework.find({page:Session.get('currentPage'), class: Session.get('currentClass')}).fetch(); //get HW from database with current page
         var selectedProblems = [];
 
         currentPageHomework.forEach(function(hw){
@@ -145,11 +169,26 @@ if (Meteor.isClient) {
     'change #selectPageNumber':function(e){
      var changedValue = parseInt($('#selectPageNumber').val());
      Session.set('currentPage',changedValue);
-
+     Session.setDefault('currentClass', findClass());
     }
 
     });
+    Template.students.helpers({
 
+       Students: function(){
+         if(!Session.get('currentClass')){
+           Meteor.setTimeout(function(){
+
+           }, 3000);
+         };
+          var students= Meteor.users.find( {class: Session.get('currentClass')});
+          console.log(students.count());
+          return students;
+       }
+
+
+
+    })
 
 
 
@@ -158,10 +197,13 @@ if (Meteor.isClient) {
     });
 }
 
+
+
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
 
+   Roles.addUsersToRoles('p6Rcb3h88WcFbq32S',['teacher']);
 
   });
 }
@@ -171,7 +213,6 @@ AccountsTemplates.configure({
     enablePasswordChange: true,
     showForgotPasswordLink: true,
 });
-
 
 AccountsTemplates.addField({
     _id: "class",
@@ -198,7 +239,6 @@ AccountsTemplates.addField({
     required: true,
     minLength: 5,
 });
-
 
 AccountsTemplates.addField({
     _id: "fName",
