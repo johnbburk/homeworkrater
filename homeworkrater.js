@@ -56,11 +56,18 @@ if (Meteor.isClient) {
   }
   };
 
-  Template.results.created (function(){
-    Session.setDefault('currentPage', latestPage());
-    Session.setDefault('currentClass', findClass());
-  });
 
+  Template.results.onRendered(function(){
+
+    this.autorun(function(){
+
+                Session.set('currentPage', latestPage());
+                Session.set('currentClass', findClass());
+
+    })
+
+
+  });
 
 
 
