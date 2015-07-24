@@ -123,11 +123,15 @@
 <template name="students">
 
   This is the student data page<br>
- <select name = "studentList">
+ <select id="studentList">
   {{#each Students}}
-  <option value="{{fName}} {{lName}}">Test Me</option>
+  <option value="{{this._id}}">{{this.profile.fName}} {{this.profile.lName}}</option>
   {{/each}}
 </select>
+
+<br>
+
+The current student is {{currrentStudent}}
 
 
 </template>
