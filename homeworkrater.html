@@ -131,7 +131,15 @@
 
 <br>
 
-The current student is {{currrentStudent}}
+The current student is {{currentStudent.profile.fName}} {{currentStudent.profile.lName}}
+
+{{#each Homework}}
+<tr>
+    <td>{{formatDate dateCreated}}</td> <td>{{page}}</td> <td>{{problemString}}</td>
+</tr>
+{{/each}}
+
+
 
 
 </template>

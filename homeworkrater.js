@@ -229,18 +229,24 @@ if (Meteor.isClient) {
       return students;
     },
 
-    currrentStudent: function(){
+    currentStudent: function(){
             console.log("finding");
-            var student = Metoer.users.findOne({_id: 'selectedStudent'});
-            console.log(student);
+            console.log(Session.get('selectedStudent'));
+            var student = Meteor.users.findOne({_id: Session.get('selectedStudent')});
+            console.log("found student is " + student);
             return student;
         },
 
-        studentProbs: function(){
+      Homework: function(){
           var problems = Homework.find({
-            userId: Session.get('selectedStudent')},{sort: page}
+            userId: Session.get('selectedStudent')},{sort: {page:1}}
           )
            return problems;
+        },
+        problemString: function() {
+
+          return problemsStringToArray(this.problems);
+
         }
 
 
@@ -255,11 +261,26 @@ if (Meteor.isClient) {
 
     },
 
+/*
+    "change": function(){
+      console.log("change function called");
+      Session.set('form_changed', new Date() );
+    },
+
+    */
+
+
 
   });
+/*
+  Template.students.form_changed = function(){
+    console.log("form_changed called");
+    return Session.get('form_changed');
 
 
 
+  }
+  */
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });
